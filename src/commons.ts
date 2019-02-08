@@ -134,8 +134,8 @@ export default class Commons {
     //     }
     // });
 
-    Commons.configWatcher.onDidChange(async event => {
-      const path: string = event.path;
+    Commons.configWatcher.onDidChange(async (uri: vscode.Uri) => {
+      const path: string = uri.path;
 
       // check sync is locking
       if (await lockfile.Check(this.en.FILE_SYNC_LOCK)) {
