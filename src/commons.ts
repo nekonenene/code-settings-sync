@@ -97,7 +97,7 @@ export default class Commons {
 
     let uploadStopped: boolean = true;
     Commons.extensionWatcher = vscode.workspace.createFileSystemWatcher(
-      this.en.ExtensionFolder + "**"
+      this.en.ExtensionFolder + "*"
     );
     Commons.configWatcher = vscode.workspace.createFileSystemWatcher(
       this.en.PATH + "/User/" + "**"
