@@ -96,14 +96,17 @@ export default class Commons {
       await lockfile.Unlock(this.en.FILE_SYNC_LOCK);
     }
 
+    console.log("configWatcher");
+    console.log(Commons.configWatcher);
+
     let uploadStopped: boolean = true;
     Commons.extensionWatcher = chokidar.watch(this.en.ExtensionFolder, {
       depth: 0,
-      ignoreInitial: true
+      ignoreInitial: false
     });
     Commons.configWatcher = chokidar.watch(this.en.PATH + "/User/", {
       depth: 2,
-      ignoreInitial: true
+      ignoreInitial: false
     });
 
     // TODO : Uncomment the following lines when code allows feature to update Issue in github code repo - #14444
@@ -137,7 +140,18 @@ export default class Commons {
     //     }
     // });
 
+    Commons.configWatcher.on("add", async (path: string) => {
+      console.log("Added: " + path);
+    });
+
+    Commons.configWatcher.on("addDir", async (path: string) => {
+      console.log("Added Dir: " + path);
+    });
+
     Commons.configWatcher.on("change", async (path: string) => {
+      console.log("Changed: " + path);
+      return;
+
       // check sync is locking
       if (await lockfile.Check(this.en.FILE_SYNC_LOCK)) {
         uploadStopped = false;
