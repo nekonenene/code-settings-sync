@@ -1,3 +1,4 @@
 npm install
+npm install -g vsce
 vsce package
 code --install-extension code-settings-sync-3.2.4.vsix
